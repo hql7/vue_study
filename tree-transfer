@@ -1,0 +1,72 @@
+// 不能动态的设置初始defaultCheckedKeys
+// 点击了默认选1-2 后，关闭弹框
+// 再次点击默认选1-1后，发现上一次点击的默认点击数据还存在并进行了叠加
+
+<template>
+  <div class="app-container">
+    <el-button type="primary" @click="handleSure('1-1')">默认选1-1</el-button>
+    <el-button type="primary" @click="handleSure('1-2')">默认选1-2</el-button>
+    <el-dialog title="权限设置"   :visible.sync="isDeptDialog" width="800px">
+      <tree-transfer
+        :title="['可选', '已选']"
+        :from_data="fromData"
+        :defaultProps="{ label: 'label' }"
+        :defaultCheckedKeys="defaultCheckedKeys"
+        :defaultTransfer="true"
+        :button_text="['加入已选', '取消已选']"
+        openAll
+      >
+      </tree-transfer>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import treeTransfer from 'el-tree-transfer'
+export default {
+  components: {treeTransfer},
+  name: 'test',
+  data () {
+    return {
+      isDeptDialog: false,
+      fromData: [
+        {id: '1',
+          pid: 0,
+          label: '一级 1',
+          children:
+            [
+              {id: '1-1', pid: '1', label: '二级 1-1', children: []},
+              {id: '1-2',
+                pid: '1',
+                label: '二级 1-2',
+                children: [
+                  {id: '1-2-1', pid: '1-2', children: [], label: '二级 1-2-1'},
+                  {id: '1-2-2', pid: '1-2', children: [], label: '二级 1-2-2'}
+                ]
+              },
+              {id: '1-3', pid: '1', label: '二级 1-3', children: []},
+              {id: '1-4',
+                pid: '1',
+                label: '二级 1-4',
+                children: [
+                  {id: '1-4-1', pid: '1-4', children: [], label: '二级 1-4-1'},
+                  {id: '1-4-2', pid: '1-4', children: [], label: '二级 1-4-2'}
+                ]
+              }
+            ]
+        }
+      ],
+      toData: [],
+      defaultCheckedKeys: []
+    }
+  },
+  methods: {
+    handleSure (val) {
+      let arr = []
+      arr.push(val)
+      this.isDeptDialog = true
+      this.defaultCheckedKeys = arr
+    }
+  }
+}
+</script>
