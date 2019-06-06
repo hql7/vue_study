@@ -1,6 +1,7 @@
 // 不能动态的设置初始defaultCheckedKeys
 // 点击了默认选1-2 后，关闭弹框
 // 再次点击默认选1-1后，发现上一次点击的默认点击数据还存在并进行了叠加
+// 作者链接 https://github.com/hql7/tree-transfer/issues/42
 
 <template>
   <div class="app-container">
